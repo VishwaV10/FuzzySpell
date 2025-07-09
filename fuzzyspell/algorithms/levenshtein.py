@@ -1,4 +1,7 @@
 # Levenshtein Algorithm
+# •	Measures the minimum number of single-character edits (insertions, deletions, substitutions) required to change one string into another.
+# •	Example: kitten → sitting = 3 operations.
+# •	Used in: spell check, auto-correct.
 
 def levenshtein_distance(a: str, b: str) -> int:
     """Returns the Levenshtein Distance between two strings."""
