@@ -31,9 +31,11 @@ class TrieNode:
 class Trie:
     def __init__(self):
         self.root = TrieNode()
+        self.words = []
 
     def insert(self, word):
         self.root.addWord(word)
+        self.words.append(word)
 
     def search(self, word):
         cur = self.root
