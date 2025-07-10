@@ -4,28 +4,34 @@ the same code — even if they’re spelled differently.
 """
 
 
-def soundex(word: str) -> str:
-    word = word.lower()
-    soundex_mapping = {
-        'b': '1', 'f': '1', 'p': '1', 'v': '1',
-        'c': '2', 'g': '2', 'j': '2', 'k': '2', 'q': '2', 's': '2', 'x': '2', 'z': '2',
-        'd': '3', 't': '3',
-        'l': '4',
-        'm': '5', 'n': '5',
-        'r': '6'
-    }
-    first_letter = word[0].upper()
+def soundex(token: str) -> str:
+    token = token.upper()
 
-    filtered = []
-    prev = ''
-    for c in word[1:]:
-        if c in soundex_mapping:
-            digit = soundex_mapping[c]
-            if digit != prev:
-                filtered.append(digit)
-                prev = digit
+    soundex = ""
 
-    filtered = [char for char in filtered if char != '']
+    # Retain the First Letter
+    soundex += token[0]
 
-    result = first_letter + ''.join(filtered)
-    return result.ljust(4, '0')[:4]
+    # Create a dictionary which maps
+    # letters to respective soundex
+    # codes. Vowels and 'H', 'W' and
+    # 'Y' will be represented by '.'
+    dictionary = {"BFPV": "1", "CGJKQSXZ": "2",
+                  "DT": "3",
+                  "L": "4", "MN": "5", "R": "6",
+                  "AEIOUHWY": "."}
+
+    # Enode as per the dictionary
+    for char in token[1:]:
+        for key in dictionary.keys():
+            if char in key:
+                code = dictionary[key]
+                if code != '.':
+                    if code != soundex[-1]:
+                        soundex += code
+
+    # Trim or Pad to make Soundex a
+    # 4-character code
+    soundex = soundex[:4].ljust(4, "0")
+
+    return soundex

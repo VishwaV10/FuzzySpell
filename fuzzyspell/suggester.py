@@ -1,5 +1,5 @@
 import heapq
-from fuzzyspell.algorithms.levenshtein import levenshtein_distance
+from fuzzyspell.algorithms.damerau_levenshtein import damerau_levenshtein
 from fuzzyspell.phonetics.soundex import soundex
 from fuzzyspell.structures.trie import Trie
 
@@ -9,7 +9,7 @@ def get_suggestions(word: str, trie: Trie, top_k: int = 5) -> list[str]:
     input_soundex = soundex(word)
 
     for candidate in trie.words:
-        distance = levenshtein_distance(word, candidate)
+        distance = damerau_levenshtein(word, candidate)
         candidate_soundex = soundex(candidate)
 
         mismatch_count = sum(1 for i, j in zip(
